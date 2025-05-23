@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def list():
-    con = sqlite3.connect('practice.db')
+    con = sqlite3.connect('test.db')
     cur = con.execute('select * from todos')
     todos = {}
     for row in cur:
@@ -19,14 +19,14 @@ def list():
 def add():
     if not request.form['name']:
         return redirect('/')
-    con = sqlite3.connect('practice.db')
+    con = sqlite3.connect('test.db')
     con.execute('insert into todos(todo) values (?)', (request.form['name'],))
     con.commit()
     return redirect('/')
 
 @app.route('/delete', methods=['POST'])
 def delete():
-    con = sqlite3.connect('practice.db')
+    con = sqlite3.connect('test.db')
     for e in request.form:
         con.execute('delete from todos where id = ?', (e,))
     con.commit()
